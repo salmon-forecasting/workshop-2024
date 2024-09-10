@@ -26,7 +26,7 @@ Thursday Afternoon Hands-On Analysis:
 
 *	Participants are encouraged to bring their own data for this session.
 
-*	To streamline the process, please install the [{ForecastR} package]((https://github.com/SalmonForecastR)) on your laptop prior to the workshop or [visit the online shinyapp](https://psc1.shinyapps.io/ForecastR/)
+*	To streamline the process, please install the [{ForecastR} package](https://github.com/SalmonForecastR) on your laptop prior to the workshop or [visit the online shinyapp](https://psc1.shinyapps.io/ForecastR/)
 
 *	Also be sure to review the documentation. This will help us save time and make the most of our analysis activities.
 
