@@ -2,9 +2,9 @@
 
 ### September 11-13, 2024
 
-### Oregon State University
-
 ### [North Willamette Research and Extension Center](https://extension.oregonstate.edu/nwrec)
+
+### Oregon State University
 
 <br>
 
