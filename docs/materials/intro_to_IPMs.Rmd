@@ -1,0 +1,614 @@
+---
+title: "Introduction to Integrated Populations Models"
+author: "Mark Scheuerell<br><br><br>(use the arrows keys to navigate the slide deck)"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "my-theme.css"]
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      # countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=8, fig.height=4, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = FALSE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+
+## set random seed
+set.seed(666)
+
+## load {icons} for font awesome
+library(icons)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo(
+  primary_color = "#FFFFFF",
+  secondary_color = "#23395b",
+  # secondary_color = "#FF961C",
+  title_slide_text_color = "#FFFFFF",
+  title_slide_background_color = "#23395b",
+  colors = c(
+    red = "#f34213",
+    purple = "#844870",
+    orange = "#FF961C",
+    green = "#339933",
+    white = "#FFFFFF",
+    blue = "#488fdf",
+    aqua = "#80cdc1",
+    gray = "#808080",
+    lightgray = "#bdbdbd"
+),
+  header_font_google = google_font("Roboto Condensed", "400", "400i", "700"),
+  text_font_google = google_font("Cabin", "400", "400i", "700"),
+)
+```
+
+class: center, middle, inverse
+
+# RUN RECONSTRUCTION:
+
+# Classical approach
+
+---
+
+class: center
+background-image: url(figs/ipm_1.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_2b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+$$\Large ~~~~~~~~~~~~~ N_{y,a} = p_a S_y$$
+
+---
+
+class: center
+background-image: url(figs/ipm_3.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_4.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_5.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_6.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+
+---
+
+# Covariate measured with error
+
+### .center.blue[Ricker model]
+
+$$\Large R_t = \alpha S_t \exp (- \beta S_t + \epsilon_t)$$
+
+
+---
+
+# Covariate measured with error
+
+### .center.blue[Ricker model]
+
+$$\Large R_t = \alpha S_t \exp (- \beta S_t + \epsilon_t) \\ 
+\Large \Downarrow \\
+\Large \log \left( \frac{R_t}{S_t} \right) = \log (\alpha) - \beta \underline{S_t} + \epsilon_t \\
+\Large \Downarrow \\
+\Large y_i = \alpha + \beta \underline{x_i} + \epsilon_i$$
+
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+### .green[2) Age-composition data are typically non-exhaustive & imprecise]
+
+
+---
+
+class: center
+background-image: url(figs/ipm_2b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Typical age expansion
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+### .blue[&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Fish sampled for age comp << total return!]
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+### .green[2) Age-composition data are typically non-exhaustive & imprecise]
+
+### .orange[3) Missing data cause problems]
+
+---
+
+class: center
+background-image: url(figs/ipm_7.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Problems with missing data
+
+---
+
+class: center
+background-image: url(figs/ipm_8.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Problems with missing data
+
+---
+
+class: center
+background-image: url(figs/ipm_9b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Problems with missing data
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+### .red[We just lost 4 pairs of missing data!]
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+### .green[2) Age-composition data are typically non-exhaustive & imprecise]
+
+### .orange[3) Missing data cause problems]
+
+### .purple[4) Stock-Recruit models are process models, not observation models]
+
+---
+
+class: center
+background-image: url(figs/ipm_10b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Observation model
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+### .red[Time-ordering is irrelevant; estimated] $\color{#F34213}{R_1}$ .red[has no effect on any later] $\color{#F34213}{S_t}$
+
+
+---
+
+class: center, middle, inverse
+
+# Integrated population models
+
+
+---
+
+# Integrated population models
+
+### &nbsp; &nbsp; &nbsp; 😃 &nbsp; .blue[Do make the model match the data]
+
+### &nbsp; &nbsp; &nbsp; 😱 &nbsp; .red[Don't pre-process the data to match the model]
+
+
+---
+
+background-image: url(figs/sorel_ipm.png)
+background-position: 50% 50%
+background-size: 60%
+
+# 😃
+
+.citation[Sorel et al (2024) CJFAS]
+
+---
+
+background-image: url(figs/jorgensen_lcm.png)
+background-position: 50% 50%
+background-size: 75%
+
+# 😱
+
+.citation[Jorgensen et al (2021) PLoS ONE]
+
+---
+
+class: center
+background-image: url(figs/ipm_11.png)
+background-position: 50% 80%
+background-size: 90%
+
+
+---
+
+class: center
+background-image: url(figs/ipm_12.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Creating recruits from spawners
+
+
+---
+
+# Forms for stock-recruit model
+
+### .center.blue[Ricker model with autocorrelated errors]
+
+$$\Large R_t = \alpha S_t \exp (- \beta S_t + \epsilon_t) \\ 
+\Large \Downarrow \\
+\Large \log (R_t) = \log (\alpha) + \log(S_t) - \beta S_t + \epsilon_t$$
+
+$$\Large \epsilon_t \sim \text{N}(\phi \epsilon_{t-1}, q)$$
+
+
+---
+
+# Forms for stock-recruit model
+
+### .center.blue[Ricker model with covariates]
+
+$$\Large R_t = \alpha S_t \exp (- \beta S_t + \gamma X_{t-h} + \epsilon_t) \\ 
+\Large \Downarrow \\
+\Large \log (R_t) = \log (\alpha) + \log(S_t) - \beta S_t + \gamma X_{t-h} + \epsilon_t$$
+
+$$\Large \epsilon_t \sim \text{N}(\phi \epsilon_{t-1}, q)$$
+
+
+---
+
+class: center
+background-image: url(figs/ipm_13.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Projecting recruits forward
+
+
+---
+
+# Projecting recruits forward
+
+<br>
+
+### .center.blue[recruits-by-age = (proportion-by-age) &times; (total recruits)]
+
+<br>
+
+$$\LARGE N_{a,t} = p_{a, t-a} R_{t-a}$$
+
+---
+
+# Observation models for spawners
+
+### .pull-left.center[True spawners]
+
+### .pull-right[&nbsp;]
+
+.pull-left[$$\Large S_t = N_t - C_t$$]
+
+### .pull-right.blue[True spawners are difference<br>between returns and catch]
+
+
+---
+
+# Observation models for spawners
+
+### .pull-left.center[True spawners]
+
+### .pull-right[&nbsp;]
+
+.pull-left[$$\Large S_t = N_t - C_t$$]
+
+### .pull-right.blue[True spawners are difference<br>between returns and catch]
+
+
+### .pull-left.center[<br><br><br>Observed spawners]
+
+### .pull-right[<br><br><br>&nbsp;]
+
+.pull-left[$$\Large \log E_t \sim \text{N}(\log S_t, \sigma_S)$$]
+
+### .pull-right.green[Measured escapement is<br>estimate of true spawners]
+
+
+---
+
+# Observation models for age-comp
+
+### .pull-left.center[Total returns]
+
+### .pull-right[&nbsp;]
+
+<div style="float: left; width: 47%;">$$\Large D_t = \sum_a O_{a,t}$$</div>
+
+### .pull-right.blue[Number of fish observed<br>in age class _a_ in year _t_]
+
+
+---
+
+# Observation models for age-comp
+
+### .pull-left.center[Total returns]
+
+### .pull-right[&nbsp;]
+
+<div style="float: left; width: 47%;">$$\Large D_t = \sum_a O_{a,t}$$</div>
+
+### .pull-right.blue[Number of fish observed<br>in age class _a_ in year _t_]
+
+
+
+<div style="clear: left; width: 47%;"><br></div>
+
+### .pull-left.center[Proportion by age]
+
+### .pull-right[&nbsp;<br>]
+
+<div style="float: left; width: 47%;">$$\Large \pi_{a,t} = \frac{N_{a,t}}{\sum_a N_{a,t}}$$</div>
+
+### <div style="float: right; padding: 15px; color: green; width: 46%;">Number of fish predicted<br>in age class _a_ in year _t_</div>
+
+
+---
+
+# Observation models for age-comp
+
+### .pull-left.center[Total returns]
+
+### .pull-right[&nbsp;]
+
+<div style="float: left; width: 47%;">$$\Large D_t = \sum_a O_{a,t}$$</div>
+
+### .pull-right.blue[Number of fish observed<br>in age class _a_ in year _t_]
+
+
+
+<div style="clear: left; width: 47%;"><br></div>
+
+### .pull-left.center[Proportion by age]
+
+### .pull-right[&nbsp;<br>]
+
+<div style="float: left; width: 47%;">$$\Large \pi_{a,t} = \frac{N_{a,t}}{\sum_a N_{a,t}}$$</div>
+
+### <div style="float: right; padding: 15px; color: green; width: 46%;">Number of fish predicted<br>in age class _a_ in year _t_</div>
+
+<div style="clear: left; width: 47%;"><br></div>
+
+$$\Large \mathbf{O}_t \sim \text{Multinomial}(\boldsymbol{\pi}_t, D_t)$$
+
+
+
+---
+
+class: center
+background-image: url(figs/ipm_14.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Feedback between R & S
+
+---
+
+class: center, middle, inverse
+
+# EXAMPLE: Washington Coho
+
+---
+
+class: left
+background-image: url(figs/wa_coho_cite.png)
+background-position: 50% 50%
+background-size: 85%
+
+
+---
+
+class: center, middle
+
+# Can we use a hierarchical approach to improve forecast performance?
+
+
+---
+
+class: left
+background-image: url(figs/wa_coho_map.png)
+background-position: 50% 50%
+background-size: 45%
+
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
+
+---
+
+background-image: url(figs/coho_pic.png)
+background-position: 90% 1%
+background-size: 40%
+
+# WA natural-origin coho
+
+### .blue[&#x2022; Eggs laid in brood year _y_] 
+
+--
+
+### .blue[&#x2022; Fry emerge in spring of year _y_ + 1]
+
+--
+
+### .blue[&#x2022; Most juveniles spend ~1 year in freshwater]
+
+--
+
+### .blue[&#x2022; Outmigrate as smolts in spring of year _y_ + 2]
+
+--
+
+### .blue[&#x2022; Most spend ~1.5 years at sea]
+
+--
+
+### .blue[&#x2022; Return to spawn in fall of year _y_ + 3]
+
+
+---
+
+# Data types (1986-2017)
+
+### .blue[&#x2022; Quantity of habitat for each population (stream length)]
+
+--
+
+### .blue[&#x2022; Adult escapement counts]
+
+--
+
+### .blue[&#x2022; Adult harvest counts]
+
+--
+
+### .blue[&#x2022; Smolt outmigration counts]
+
+--
+
+### .blue[&#x2022; Coded wire tag marine survival estimates]
+
+
+---
+
+# Forecast evaluation
+
+### .blue[&#x2022; Initially fit to 16 years (1986-2001)]
+
+--
+
+### .blue[&#x2022; Skill evaluated for next 16 years (2002-2017) with model refit each year]
+
+--
+
+### .blue[&#x2022; Skill based on mean absolute scaled error (MASE)]
+
+$$\Large ASE_{i, y}=\frac{\left|P_{i, y}-A_{i, y}\right|}{\frac{1}{n-1} \sum_1^n\left|A_{i, t}-A_{i, t-1}\right|}$$
+
+---
+
+background-image: url(figs/wa_coho_surv-corr.png)
+background-position: 70% 50%
+background-size: 47%
+
+# Correlation in<br>marine survival
+
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
+
+---
+
+class: frimg, center
+background-image: url(figs/BH_form.png)
+background-position: 50% 77%
+background-size: 60%
+
+# Theoretical parent-offspring relationship
+
+---
+
+class: frimg, center
+background-image: url(figs/wa_coho_b-h.png)
+background-position: 50% 50%
+background-size: 55%
+
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
+---
+
+class: frimg, center
+background-image: url(figs/wa_coho_fore.png)
+background-position: 45% 65%
+background-size: 55%
+
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
+---
+
+background-image: url(figs/wa_coho_error.png)
+background-position: 55% 60%
+background-size: 30%
+
+# IPM offers<br>improvement
+
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
+
+---
+
+# Learn more about IPMs
+
+### https://github.com/lukasdefilippo/ST-IPM
+
+### https://github.com/mdscheuerell/steelhead_IPM
+
+### https://github.com/marksorel8/Sorel_etal_Wenatchee_IPM
+
+
