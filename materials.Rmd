@@ -1,5 +1,5 @@
 ---
-title: "Materials"
+title: ""
 output: html_document
 ---
 
@@ -7,4 +7,25 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Coming soon!
+<br>
+
+This page contains some background materials, presentations, and other information related to salmon forecasting.
+
+***
+
+### Background info
+
+* [Overview of forecasting strategy](materials/forecasting_overview.html) | Mark Scheuerell
+
+* [Introduction to state-space models](materials/intro_to_SSMs.html) | Mark Scheuerell
+
+* [Introduction to integrated population models (IPMs)](materials/intro_to_IPMs.html) | Mark Scheuerell
+
+<br>
+
+***
+
+### Model fitting
+
+* [Fitting state-space models to data](materials/fitting_ssm.html) | Mark Scheuerell
+
