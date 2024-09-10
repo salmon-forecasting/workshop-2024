@@ -10,6 +10,9 @@ navbar:
       href: materials.html
     - text: "Participants"
       href: participants.html
+    - text: ""
+      icon: fab fa-github
+      href: https://github.com/salmon-forecasting/workshop-2024
 output_dir: "docs"
 output:
   html_document:
