@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to State-Space Models</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="WA-BC AFS Meeting Spokane, WA  29 April 2024" />
+    <script src="intro_to_SSMs_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Introduction to State-Space Models
+]
+.subtitle[
+## Predicting Salmon Returns
+]
+.author[
+### WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024
+]
+
+---
+
+
+
+
+
+
+
+# ESA status reviews
+
+## .blue[Required every 5 years to ensure appropriate protections]
+
+## .blue[Considerations include]
+
+&gt; ### .gray[population trends, distribution, demographics &amp; genetics]
+
+&gt; ### .gray[habitat conditions]
+
+&gt; ### .gray[past conservation measures]
+
+&gt; ### .gray[status &amp; trends of threats]
+
+
+---
+
+class: inverse, center, middle
+
+# Surely listed species are closely monitored?
+
+
+---
+
+class: frimg
+background-image: url(figs/no_evil.jpg)
+background-size: 80%
+
+
+---
+
+class: center
+
+# The data are gappy
+
+&lt;img src="intro_to_SSMs_files/figure-html/data_gappy-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# The data are noisy
+
+&lt;br&gt;
+
+## .center.green[
+Non-exhaustive surveys
+]
+## .center.blue[
+Undetected individuals
+]
+## .center.orange[
+Misidentified individuals
+]
+
+
+---
+
+# The data are disparate
+
+&lt;br&gt;
+
+
+## .center.green[
+Direct vs remotely sensed
+]
+## .center.blue[
+Design-based vs opportunistic
+]
+## .center.orange[
+Scientific surveys vs recreational sampling
+]
+
+
+
+---
+
+class: middle
+
+&gt; # .blue[
+How can we use this information to inform decisions?
+]
+&gt; # .green[
+For trends over time, one option is a state-space model
+]
+
+
+---
+
+# Part 1: State model
+
+## Describes the .blue[true state of nature] over time
+
+&lt;img src="intro_to_SSMs_files/figure-html/state_diag-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# States of nature might be
+
+## .center.green[
+Animal location
+]
+## .center.blue[
+Species density
+]
+## .center.orange[
+Age structure
+]
+## .center.purple[
+Reproductive status
+]
+
+
+---
+
+# Changes in the state of nature
+
+## .blue[Generally driven by a combination of]
+
+ ## .blue[&amp;#x2022; intrinsic (eg, fecundity)]
+
+ ## .blue[&amp;#x2022; extrinsic factors (eg, temperature)]
+
+
+---
+
+# Process errors
+
+## .blue[Some of the extrinsic drivers may be unknown]
+
+## .blue[We often call these unknown extrinsic factors] _process errors_
+
+
+---
+
+class: frimg, center, bottom, inverse-black
+background-image: url(figs/venice_carnival.jpg)
+background-size: 100%
+
+## .white[Revealing the true state requires observations]
+
+&lt;br&gt;
+
+
+---
+
+# Observation (sampling) errors
+
+## .blue[Collecting data depends on many factors]
+
+### &amp;#x2022; Environmental conditions (eg, cloud cover)
+
+### &amp;#x2022; Behavior (eg, threat avoidance)
+
+### &amp;#x2022; Demographics (age, sex, maturity)
+
+### &amp;#x2022; Sampling design/coverage
+
+### &amp;#x2022; Observer skill
+
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can be easy
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white[How many sockeye are there?]
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can also be hard
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white[How many mayflies are there?]
+
+---
+
+# Part 2: Observation model
+
+&lt;br&gt;
+
+# .center[.purple[Data] = .blue[Truth] &amp;#177; .red[Errors]]
+
+---
+
+# Part 2: Observation model
+
+&lt;img src="intro_to_SSMs_files/figure-html/obs_diag-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Why bother?
+
+---
+
+# Advantages
+
+## 1. Can combine many different .purple[data types]
+
+## .center.purple[
+Changes in observers or sensors
+]
+
+## .center.purple[
+Varying survey locations &amp; effort
+]
+
+## .center.purple[
+Direct &amp; remote sampling  
+]
+
+---
+
+# Advantages
+
+## 2. .gray[Missing data] are easily accommodated
+
+&lt;img src="intro_to_SSMs_files/figure-html/obs_NA-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: frimg
+background-image: url(figs/Jonsen2016.png)
+background-position: 50% 70%
+background-size: 70%
+
+# Advantages
+
+## 3. Improved accuracy &amp; precision
+
+---
+
+class: frimg
+background-image: url(figs/robin.jpg)
+background-position: 50% 80%
+background-size: 30%
+
+# Advantages
+
+## 4. .gray[Data-poor] benefit from .green[data-rich]
+
+
+---
+
+# State-space model | General form
+
+## .blue[State model (autoregressive)]
+
+`\(\LARGE x_t = f(x_{t-1}, \text{process error})\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = g(x_t, \text{observation error})\)`
+
+
+---
+
+# State-space model | Random walk
+
+## .blue[State model]
+
+`\(\LARGE x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+
+---
+
+class: center
+
+# Examples of random walks
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# State-space model | Biased random walk
+
+## .blue[State model]
+
+`\(\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+
+---
+
+class: center
+
+# Examples of biased random walks
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# State-space model | Mean-reverting
+
+## .blue[State model]
+
+`\(\LARGE x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| &lt; 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+
+---
+
+class: center
+
+# Examples of mean-reverting models
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_AR1-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: center
+
+# Consider these data
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_bias_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Two model options
+
+## .blue[1) Linear regression] 
+
+`\(\LARGE y_t = \alpha + \beta t + e_t\)`
+
+&lt;br&gt;
+
+## .green[2) Biased random walk]
+
+`\(\LARGE x_t = x_{t-1} + u + e_t\)`
+
+
+---
+
+# 1) Linear regression as a state-space model
+
+## .blue[State model]
+
+`\(\LARGE x_t = \alpha + \beta t\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+---
+
+class: center
+
+# Estimated state
+
+&lt;img src="intro_to_SSMs_files/figure-html/linear_regr-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: center
+
+# Observation errors
+
+&lt;img src="intro_to_SSMs_files/figure-html/obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 2) Biased random walk as a state-space model
+
+## .blue[State model]
+
+`\(\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = x_t\)`
+
+
+---
+
+class: center
+
+# Estimated state
+
+&lt;img src="intro_to_SSMs_files/figure-html/biased_rw_fit-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: center
+
+# Process errors
+
+&lt;img src="intro_to_SSMs_files/figure-html/biased_rw_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: middle, center
+
+# What if we combined the two models?
+
+
+---
+
+# Biased random walk with observation error
+
+## .blue[State model]
+
+`\(\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+
+---
+
+class: center 
+
+# Estimated state
+
+&lt;img src="intro_to_SSMs_files/figure-html/brw_sssm_fit-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: center 
+
+# Process errors
+
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: center 
+
+# Observation errors
+
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_errors_2-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: middle
+
+&gt; # .blue[How is it possible to separate the process and observation errors?]
+
+&gt; # .green[They have different temporal patterns]
+
+
+---
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_proc_obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Model fitting: The Kalman filter
+
+### .blue[In the 1950s, Rudolf Kalman began developing a new algorithm for processing signals obtained from noisy sensors]
+
+--
+
+### .blue[In the 1960s, NASA used it for guidance &amp; navigation computers&lt;sup&gt;*&lt;/sup&gt; in Apollo missions]
+
+--
+
+### .blue[Now, the so-called "Kalman filter" is now widely used in statistics, aeronautics &amp; robotics]
+
+.citation.gray[*Mark's laptop has 8 million times the RAM]
+
+
+---
+
+# Kalman filter: 3 types of estimates
+
+&lt;img src="intro_to_SSMs_files/figure-html/KF_types-1.png" width="90%" height="90%" /&gt;
+
+
+---
+
+# More information
+
+## [.purple[Time series course at UW (FISH 550)]](https://atsa-es.github.io/atsa/)
+
+## [.purple[eBook]](https://atsa-es.github.io/atsa-labs/)
+
+## [.purple[YouTube channel]](https://www.youtube.com/@SAFSTimeSeries)
+
+
+---
+
+class: frimg
+background-image: url(figs/SSM_review.png)
+background-position: 50% 50%
+background-size: 80%
+
+# More information
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

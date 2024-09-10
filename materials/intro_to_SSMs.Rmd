@@ -1,0 +1,971 @@
+---
+title: "Introduction to State-Space Models"
+subtitle: "Predicting Salmon Returns"  
+author: 
+#  - "Mark Scheuerell"
+  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "my-theme.css"]
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      # countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=8, fig.height=4, fig.retina=3,
+  out.width = "90%",
+  cache = FALSE,
+  echo = FALSE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+
+## set random seed
+set.seed(666)
+
+## load {icons} for font awesome
+library(icons)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo(
+  primary_color = "#FFFFFF",
+  secondary_color = "#23395b",
+  # secondary_color = "#FF961C",
+  title_slide_text_color = "#FFFFFF",
+  title_slide_background_color = "#23395b",
+  colors = c(
+    red = "#f34213",
+    purple = "#844870",
+    orange = "#FF961C",
+    green = "#339933",
+    white = "#FFFFFF",
+    blue = "#488fdf",
+    aqua = "#80cdc1",
+    gray = "#808080",
+    lightgray = "#bdbdbd"
+),
+  header_font_google = google_font("Roboto Condensed", "400", "400i", "700"),
+  text_font_google = google_font("Cabin", "400", "400i", "700"),
+)
+```
+
+
+# ESA status reviews
+
+## .blue[Required every 5 years to ensure appropriate protections]
+
+## .blue[Considerations include]
+
+> ### .gray[population trends, distribution, demographics & genetics]
+
+> ### .gray[habitat conditions]
+
+> ### .gray[past conservation measures]
+
+> ### .gray[status & trends of threats]
+
+
+---
+
+class: inverse, center, middle
+
+# Surely listed species are closely monitored?
+
+
+---
+
+class: frimg
+background-image: url(figs/no_evil.jpg)
+background-size: 80%
+
+
+---
+
+class: center
+
+# The data are gappy
+
+```{r data_gappy, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE, warning=FALSE}
+nn <- 20
+tt <- rpois(nn, 10)
+na <- sample(tt, 5)
+tt[na] <- NA
+par(mai = c(1, 1, 0, 1), omi = rep(0, 4))
+plot(seq(nn), tt, type = "o", 
+     pch = 16, lwd = 3, cex = 1.5,
+     col = "dodgerblue",
+     las = 1, ylim = c(0, max(tt, na.rm = TRUE)),
+     xlab = "Time", ylab = "Count",
+     cex.lab = 1.6,
+     cex.axis = 1.3)
+```
+
+
+---
+
+# The data are noisy
+
+<br>
+
+## .center.green[
+Non-exhaustive surveys
+]
+## .center.blue[
+Undetected individuals
+]
+## .center.orange[
+Misidentified individuals
+]
+
+
+---
+
+# The data are disparate
+
+<br>
+
+
+## .center.green[
+Direct vs remotely sensed
+]
+## .center.blue[
+Design-based vs opportunistic
+]
+## .center.orange[
+Scientific surveys vs recreational sampling
+]
+
+
+
+---
+
+class: middle
+
+> # .blue[
+How can we use this information to inform decisions?
+]
+> # .green[
+For trends over time, one option is a state-space model
+]
+
+
+---
+
+# Part 1: State model
+
+## Describes the .blue[true state of nature] over time
+
+```{r state_diag, dpi=300, out.height="80%", out.width="80%", fig.align='center', echo=FALSE, warning=FALSE}
+par(mai=c(0.8,0.8,0,0), omi=rep(0,4))
+## boundaries
+ss <- 5
+nn <- 7
+rr <- ss*3
+cc <- ss*nn
+## mid-points
+xm <- ss/2 + seq(0,cc-ss,ss)
+ymt <- rr - ss/2
+ymb <- ss/2
+## arrow locs
+x0t <- seq(ss, by=2*ss, len=3)
+x1t <- x0t + ss
+## empty plot space
+plot(c(0,cc), c(0,rr), type="n", xlab="", ylab="",
+     xaxt="n", yaxt="n", bty="n")
+## top row: state
+symbols(x=xm[c(1,3,5,7)], y=rep(ymt,4), circles=rep(ss/2,4),
+        lty="solid",  fg=NA, bg="#488fdf",
+        inches=FALSE, add=TRUE, lwd=3)
+text("Truth", x=-ss, y=ymt, adj=c(0,0.5), xpd=NA,
+     cex=2, col="#488fdf")
+arrows(x0=x0t,x1=x1t,y0=ymt, col="#488fdf", lwd=3, length=0.12)
+## Time or space
+arrows(x0=ss/2, x1=cc-ss/2, y0=-ss/3+ss*2,
+       length=0.12, lwd=3, xpd=NA)
+text("Time", x=cc/2, y=-ss/2+ss*2, xpd=NA, pos=1, cex=2)
+```
+
+---
+
+# States of nature might be
+
+## .center.green[
+Animal location
+]
+## .center.blue[
+Species density
+]
+## .center.orange[
+Age structure
+]
+## .center.purple[
+Reproductive status
+]
+
+
+---
+
+# Changes in the state of nature
+
+## .blue[Generally driven by a combination of]
+
+ ## .blue[&#x2022; intrinsic (eg, fecundity)]
+
+ ## .blue[&#x2022; extrinsic factors (eg, temperature)]
+
+
+---
+
+# Process errors
+
+## .blue[Some of the extrinsic drivers may be unknown]
+
+## .blue[We often call these unknown extrinsic factors] _process errors_
+
+
+---
+
+class: frimg, center, bottom, inverse-black
+background-image: url(figs/venice_carnival.jpg)
+background-size: 100%
+
+## .white[Revealing the true state requires observations]
+
+<br>
+
+
+---
+
+# Observation (sampling) errors
+
+## .blue[Collecting data depends on many factors]
+
+### &#x2022; Environmental conditions (eg, cloud cover)
+
+### &#x2022; Behavior (eg, threat avoidance)
+
+### &#x2022; Demographics (age, sex, maturity)
+
+### &#x2022; Sampling design/coverage
+
+### &#x2022; Observer skill
+
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can be easy
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white[How many sockeye are there?]
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can also be hard
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white[How many mayflies are there?]
+
+---
+
+# Part 2: Observation model
+
+<br>
+
+# .center[.purple[Data] = .blue[Truth] &#177; .red[Errors]]
+
+---
+
+# Part 2: Observation model
+
+```{r obs_diag, dpi=300, out.height="80%", out.width="80%", fig.align='center', echo=FALSE, warning=FALSE}
+par(mai=c(1,1,0,0), omi=rep(0,4))
+## arrow locs
+x0t <- seq(ss, by=2*ss, len=3)
+x1t <- x0t + ss
+y0b <- rr - ss
+y1b <- ss
+## empty plot space
+plot(c(0,cc), c(0,rr), type="n", xlab="", ylab="",
+     xaxt="n", yaxt="n", bty="n")
+## top row: state
+symbols(x=xm[c(1,3,5,7)], y=rep(ymt,4), circles=rep(ss/2,4),
+        lty="solid",  fg=NA, bg="#488fdf",
+        inches=FALSE, add=TRUE, lwd=3)
+text("Truth", x=-ss, y=ymt, adj=c(0,0.5), xpd=NA,
+     cex=2, col="#488fdf")
+## arrows
+arrows(x0=x0t,x1=x1t,y0=ymt, col="#488fdf", lwd=3, length=0.12)
+## bottom row: obs
+symbols(x=xm[c(1,3,5,7)], y=rep(ss/2,4), circles=rep(ss/2,4),
+        lty="solid",  fg=NA, bg="#844870",
+        inches=FALSE, add=TRUE, lwd=3)
+text("Data", x=-ss, y=ss/2, adj=c(0,0.5), xpd=NA,
+     cex=2, col="#844870")
+## arrows
+arrows(x0=xm[c(1,3,5,7)], y0=y0b, y1=y1b,
+       col="#c10101", lwd=3, length=0.12)
+## Time or space
+arrows(x0=ss/2, x1=cc-ss/2, y0=-ss/3,
+       length=0.12, lwd=3, xpd=NA)
+text("Time", x=cc/2, y=-ss/2, xpd=NA, pos=1, cex=2)
+```
+
+---
+
+class: inverse, center, middle
+
+# Why bother?
+
+---
+
+# Advantages
+
+## 1. Can combine many different .purple[data types]
+
+## .center.purple[
+Changes in observers or sensors
+]
+
+## .center.purple[
+Varying survey locations & effort
+]
+
+## .center.purple[
+Direct & remote sampling  
+]
+
+---
+
+# Advantages
+
+## 2. .gray[Missing data] are easily accommodated
+
+```{r obs_NA, dpi=300, out.height="80%", out.width="80%", fig.align='center', echo=FALSE, warning=FALSE}
+par(mai=c(1,1,0,0), omi=rep(0,4))
+## arrow locs
+x0t <- seq(ss, by=2*ss, len=3)
+x1t <- x0t + ss
+y0b <- rr - ss
+y1b <- ss
+## empty plot space
+plot(c(0,cc), c(0,rr), type="n", xlab="", ylab="",
+     xaxt="n", yaxt="n", bty="n")
+## top row: state
+symbols(x=xm[c(1,3,5,7)], y=rep(ymt,4), circles=rep(ss/2,4),
+        lty="solid",  fg=NA, bg="#488fdf",
+        inches=FALSE, add=TRUE, lwd=3)
+text("Truth", x=-ss, y=ymt, adj=c(0,0.5), xpd=NA,
+     cex=2, col="#488fdf")
+## arrows
+arrows(x0=x0t,x1=x1t,y0=ymt, col="#488fdf", lwd=3, length=0.12)
+## bottom row: obs
+symbols(x=xm[c(1,3,7)], y=rep(ss/2,3), circles=rep(ss/2,3),
+        lty="solid",  fg=NA, bg="#844870",
+        inches=FALSE, add=TRUE, lwd=3)
+text("Data", x=-ss, y=ss/2, adj=c(0,0.5), xpd=NA,
+     cex=2, col="#844870")
+## NA's
+symbols(x=xm[5], y=ss/2, circles=ss/2,
+        lty="solid",  fg=NA, bg="#656565",
+        inches=FALSE, add=TRUE, lwd=3)
+text("NA", x=xm[5], y=ss/2, cex=1.8, col="#ffffff")
+## arrows
+arrows(x0=xm[c(1,3,7)], y0=y0b, y1=y1b,
+       col="#c10101", lwd=3, length=0.12)
+## Time or space
+arrows(x0=ss/2, x1=cc-ss/2, y0=-ss/3,
+       length=0.12, lwd=3, xpd=NA)
+text("Time or space", x=cc/2, y=-ss/2, xpd=NA, pos=1, cex=2)
+```
+
+---
+
+class: frimg
+background-image: url(figs/Jonsen2016.png)
+background-position: 50% 70%
+background-size: 70%
+
+# Advantages
+
+## 3. Improved accuracy & precision
+
+---
+
+class: frimg
+background-image: url(figs/robin.jpg)
+background-position: 50% 80%
+background-size: 30%
+
+# Advantages
+
+## 4. .gray[Data-poor] benefit from .green[data-rich]
+
+
+---
+
+# State-space model | General form
+
+## .blue[State model (autoregressive)]
+
+$\LARGE x_t = f(x_{t-1}, \text{process error})$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = g(x_t, \text{observation error})$
+
+
+---
+
+# State-space model | Random walk
+
+## .blue[State model]
+
+$\LARGE x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+class: center
+
+# Examples of random walks
+
+```{r ex_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
+clr1 <- c("#f7fbff",
+          "#deebf7",
+          "#c6dbef",
+          "#9ecae1",
+          "#6baed6",
+          "#4292c6",
+          "#2171b5",
+          "#08519c",
+          "#08306b")
+
+## simulate RW's
+rr <- matrix(NA, 30, 9)
+for(i in 1:9) {
+  rr[,i] <- cumsum(rnorm(30, 0, 0.5))
+}
+
+## plot them
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(rr[,1], las = 1, col = "dodgerblue", lwd = 2, ylim = range(rr),
+        ylab = expression(italic(x[t])), main = "")
+for(i in 9:3) {
+  lines(rr[,i],
+        col = clr1[i], lwd = 2)
+}
+```
+
+
+---
+
+# State-space model | Biased random walk
+
+## .blue[State model]
+
+$\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+class: center
+
+# Examples of biased random walks
+
+```{r ex_biased_rw, fig.dim = c(9,4), dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
+clr2 <- c("#fff5f0",
+          "#fee0d2",
+          "#fcbba1",
+          "#fc9272",
+          "#fb6a4a",
+          "#ef3b2c",
+          "#cb181d",
+          "#a50f15",
+          "#67000d")
+
+par(mfrow = c(1,2), mai = c(1, 1, 0.5, 0), omi = c(0, 0, 0, 1))
+
+## pos bias
+x1 <- cumsum(rnorm(30, 0.1, 0.3)) + 10
+
+plot.ts(x1, las = 1, col = "dodgerblue", lwd = 2, ylim = c(8, 16),
+        ylab = expression(italic(x[t])), main = "")
+mtext("Positive bias", side = 3, line = 1, cex = 1.5)
+for(i in 9:3) {
+  lines(cumsum(rnorm(30, 0.1, 0.3)) + 10,
+        col = clr1[i], lwd = 2)
+}
+
+## neg bias
+x2 <- cumsum(rnorm(30, -0.1, 0.3)) + 10
+
+plot.ts(x2, las = 1, col = "indianred", lwd = 2,  ylim = c(4, 12),
+        ylab = expression(italic(x[t])), main = "")
+mtext("Negative bias", side = 3, line = 1, cex = 1.5)
+for(i in 9:3) {
+  lines(cumsum(rnorm(30, -0.1, 0.3)) + 10,
+        col = clr2[i], lwd = 2)
+}
+```
+
+
+---
+
+# State-space model | Mean-reverting
+
+## .blue[State model]
+
+$\LARGE x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| < 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+class: center
+
+# Examples of mean-reverting models
+
+```{r ex_AR1, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## simulate AR(1) models
+mm <- matrix(rnorm(270), 30, 9)
+for(j in 1:9) {
+  for(i in 2:30)
+  mm[i, j] <- (10-j) / 10 * mm[i-1, j] + rnorm(1, 0, 1)
+}
+
+## plot them
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(mm[,1], las = 1, col = "dodgerblue", lwd = 2, ylim = range(mm),
+        ylab = expression(italic(x[t])), main = "")
+for(i in 9:3) {
+  lines(mm[,i],
+        col = clr1[i], lwd = 2)
+}
+```
+
+
+---
+
+class: center
+
+# Consider these data
+
+```{r ex_bias_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## length of ts
+TT <- 30
+
+## bias
+uu <- -0.2
+  
+## process errors
+ww <- xx <- rnorm(TT)
+
+## biased RW
+for(t in 2:TT) {
+  xx[t] <- xx[t-1] + uu + ww[t]
+}
+
+## obs errors
+ee <- rnorm(TT)
+
+## estimated data
+yy <- xx + ee
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(yy, ylim = range(xx,yy),
+        lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+```
+
+
+---
+
+# Two model options
+
+## .blue[1) Linear regression] 
+
+$\LARGE y_t = \alpha + \beta t + e_t$
+
+<br>
+
+## .green[2) Biased random walk]
+
+$\LARGE x_t = x_{t-1} + u + e_t$
+
+
+---
+
+# 1) Linear regression as a state-space model
+
+## .blue[State model]
+
+$\LARGE x_t = \alpha + \beta t$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+---
+
+class: center
+
+# Estimated state
+
+```{r linear_regr, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## regr coefs
+theta <- coef(lm(yy ~ seq(TT)))
+## y_hat
+y_obs <- theta[1] + theta[2] * seq(TT)
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## data
+plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),
+        cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## state/process
+lines(y_obs, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+```
+
+
+---
+
+class: center
+
+# Observation errors
+
+```{r obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## data
+plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),  
+        cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## state/process
+lines(y_obs, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## obs errors
+segments(seq(TT), y0 = y_obs, y1 = yy, lwd = 2, col = "red")
+```
+
+
+---
+
+# 2) Biased random walk as a state-space model
+
+## .blue[State model]
+
+$\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t$
+
+
+---
+
+class: center
+
+# Estimated state
+
+```{r biased_rw_fit, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## data
+plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+## state/process
+lines(yy, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+```
+
+
+---
+
+class: center
+
+# Process errors
+
+```{r biased_rw_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+yw <- rbind(cbind(seq(TT), yy), cbind(seq(TT)+0.5, yy+uu))
+yw <- yw[order(yw[,1]),]
+yw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+## bias
+lines(yw[,1], yw[,2], lwd = 2, col = "gray")
+## state/process
+lines(yy, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## process errors
+segments(seq(2,TT), y0 = yy[-TT] + uu, y1 = yy[-1], col = "red")
+```
+
+
+---
+
+class: middle, center
+
+# What if we combined the two models?
+
+
+---
+
+# Biased random walk with observation error
+
+## .blue[State model]
+
+$\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+class: center 
+
+# Estimated state
+
+```{r brw_sssm_fit, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, type = "n",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## data
+lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
+## state/process
+lines(xx, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+```
+
+
+---
+
+class: center 
+
+# Process errors
+
+```{r brw_states_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## create ts of bias and process error
+xw <- rbind(cbind(seq(TT), xx), cbind(seq(TT)+0.5, xx+uu))
+xw <- xw[order(xw[,1]),]
+xw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
+
+## plot them
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, type = "n",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## bias plus errors
+lines(xw[,1], xw[,2], lwd = 2, col = "gray")
+## data
+lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
+## state/process
+lines(xx, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## process errors
+segments(seq(2,TT), y0 = xx[-TT] + uu, y1 = xx[-1], col = "red")
+```
+
+
+---
+
+class: center 
+
+# Observation errors
+
+```{r brw_states_obs_errors_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, ylim = range(xx,yy), type = "n",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## bias
+lines(xw[,1], xw[,2], lwd = 2, col = "gray")
+## state
+lines(xx, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## obs errors
+segments(seq(TT), y0 = xx, y1 = yy, lwd = 2, col = "red")
+## data
+lines(yy, lwd = 2, type = "o", pch = 16, col = "#844870", cex = 1.5)
+```
+
+
+---
+
+class: middle
+
+> # .blue[How is it possible to separate the process and observation errors?]
+
+> # .green[They have different temporal patterns]
+
+
+---
+
+```{r ex_proc_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE, fig.dim = c(8,5)}
+
+## biased random walks
+xp <- matrix(NA, TT, 3)
+xp[1,] <- c(0,0,0)
+
+for(t in 2:TT) {
+  xp[t,] <- xp[t-1,] + uu + rnorm(3)
+}
+
+## add obs error
+yp <- xp[,1] + matrix(rnorm(TT*3), TT, 3)
+
+## plot them
+par(mfcol = c(2,3), mai = c(0.6,0.6,0.1,0), omi = c(0,0,0.2,0))
+for(i in 1:3) {
+  plot.ts(xp[,i], xlab = "", ylab = expression(italic(x[t])),
+          lwd = 2, col = "#488fdf")
+  if(i == 2) {
+    mtext(side = 3, " Different realizations of same process",
+          line = 0.5, xpd = NA, cex = 1.5)
+    }
+  plot.ts(yp[,i], ylab = expression(italic(y[t])),
+          lwd = 2, col = "#844870")
+  if(i == 2) {
+    mtext(side = 3, " Different observations of same process",
+          line = 0.5, xpd = NA, cex = 1.5)
+    }
+}
+```
+
+
+---
+
+# Model fitting: The Kalman filter
+
+### .blue[In the 1950s, Rudolf Kalman began developing a new algorithm for processing signals obtained from noisy sensors]
+
+--
+
+### .blue[In the 1960s, NASA used it for guidance & navigation computers<sup>*</sup> in Apollo missions]
+
+--
+
+### .blue[Now, the so-called "Kalman filter" is now widely used in statistics, aeronautics & robotics]
+
+.citation.gray[*Mark's laptop has 8 million times the RAM]
+
+
+---
+
+# Kalman filter: 3 types of estimates
+
+```{r KF_types, out.width = "90%", out.height = "90%"}
+## data for lines
+x <- seq(4)
+fore <- rep(3, 4)
+fltr <- rep(2, 4)
+smth <- rep(1, 4)
+
+par(mai = c(1, 2, 0.5, 2), omi = c(0, 0, 0, 0))
+## base
+matplot(x, cbind(fore, fltr, smth),
+     lty = "solid", lwd = 1.5, col = "gray",
+     xlim = c(1, 4), ylim = c(0.5, 3),
+     type = "o", pch = 16, cex = 2,
+     xaxt = "n", yaxt = "n", bty = "n", cex.axis = 1.5,
+     ylab = "", xlab = "Time", cex.lab = 1.5
+       )
+## t = reference
+abline(v = 3, lty = "dashed")
+## forecasting
+lines(x[1:2], fore[1:2], type = "o", pch = 16, cex = 2,
+      col = "dodgerblue")
+points(3, 3, pch = 16, cex = 2,
+      col = "gray")
+## filtering
+lines(x[1:3], fltr[1:3], type = "o", pch = 16, cex = 2,
+      col = "dodgerblue")
+## smoothing
+lines(x, smth, type = "o", pch = 16, cex = 2,
+      col = "dodgerblue")
+axis(1, at = seq(4),
+     labels = c("t-2", "t-1", "t", "t+1"),
+     cex.axis = 1.5)
+text(x = 0.7, y = 3,
+     labels = "Prediction", cex = 1.5,
+     pos = 2, xpd = NA)
+text(x = 0.7, y = 2,
+     labels = "Filter", cex = 1.5,
+     pos = 2, xpd = NA)
+text(x = 0.7, y = 1,
+     labels = "Smooth", cex = 1.5,
+     pos = 2, xpd = NA)
+```
+
+
+---
+
+# More information
+
+## [.purple[Time series course at UW (FISH 550)]](https://atsa-es.github.io/atsa/)
+
+## [.purple[eBook]](https://atsa-es.github.io/atsa-labs/)
+
+## [.purple[YouTube channel]](https://www.youtube.com/@SAFSTimeSeries)
+
+
+---
+
+class: frimg
+background-image: url(figs/SSM_review.png)
+background-position: 50% 50%
+background-size: 80%
+
+# More information
+
+
