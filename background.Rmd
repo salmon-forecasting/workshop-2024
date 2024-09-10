@@ -1,0 +1,54 @@
+---
+title: "Background"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+---
+
+<br>
+
+Welcome to the Salmon Run Forecasting Workshop! We are excited to facilitate a dynamic and interactive session where practitioners and consumers of salmon run forecasts can come together to share insights, explore challenges, and discuss solutions.
+
+***
+
+## Workshop Goals
+
+*	Foster meaningful interactions and discussions among participants.
+
+*	Create an inviting and informal atmosphere to encourage open dialogue of the uses and limitations of run forecasting for decision-making.
+
+*	Engage in hands-on analysis and collaborative exploration of salmon run forecasting.
+Thursday Afternoon Hands-On Analysis:
+
+*	We have scheduled a hands-on analysis session for Thursday afternoon.
+
+*	Participants are encouraged to bring their own data for this session.
+
+*	To streamline the process, please install the [{ForecastR} package]((https://github.com/SalmonForecastR)) on your laptop prior to the workshop or [visit the online shinyapp](https://psc1.shinyapps.io/ForecastR/)
+
+*	Also be sure to review the documentation. This will help us save time and make the most of our analysis activities.
+
+***
+
+## Discussion leads
+
+*	We are still looking for volunteers on several topics, see agenda below for details.
+
+*	We thank all of the discussion leads for volunteering their time and expertise.
+
+*	Your role is to set up the topic and initiate the discussion.
+
+*	Please note that this does not require a formal presentation, such as at an AFS meeting. Instead, aim to foster a collaborative conversation.
+
+*	If you wish, you are welcome to use the computer and projector available to introduce topics with visual material and facilitate discussions.
+
+***
+
+## Additional information
+
+*	The workshop is designed to be informal and interactive. Feel free to engage with others, ask questions, and share your experiences.
+
+*	We look forward to a productive and enjoyable workshop experience with all of you.
+Thank you for your participation and contributions. We are excited to see the collaborative discussions and insights that will emerge!
