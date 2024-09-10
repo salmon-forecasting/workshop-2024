@@ -1,0 +1,150 @@
+---
+title: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+---
+
+<br>
+
+## Wednesday, Sept 11
+
+<br>
+
+
+#### 1:00 - 1:15	| Welcome and introductions
+
+
+<br>
+
+#### 1:15 - 2:45 | Round table presentation and discussions
+
+* Overview of ODFW forecasting (Megan Sabal)
+	  
+* Columbia River US vs. Oregon (Mark Sorel and Hanna Moore)
+	  
+* Columbia Idaho perspectives - real time / in season management (Chris Sullivan)
+	  
+* Run forecasts for WA coastal steelhead using integrated population models (Jan Ohlberger)
+	  
+* Klamath salmon forecasts (Brett Kormos)
+	  
+* Central Valley salmon forecasts (Colin Purdy)
+	  
+* How forecasts are used in ocean fishery models (Ethan Clemons/ Michael O’Farrell)
+	  
+* Salmon and Elk river basins forecasts (Brian Riggers)
+
+
+<br>
+
+#### 2:45 - 3:00 | Break
+
+
+<br>
+
+#### 3:00 - 4:30 | Round table presentation and discussions (continued)
+
+
+<br>
+
+#### 4:30 | Adjourn 
+
+<br>
+
+
+***
+
+## Thursday, Sept 12    
+
+  
+<br>
+
+#### 8:30 - 10:00 | Forecasting tech: tools and approaches
+
+* Summary and synthesis of differing forecasting math (Mark Scheuerell) 
+    
+    -	Introduce approaches not discussed during round table (see `Forecasting tools and approaches.xlsx`)
+    
+    - Assessing predictive ability (Nick Som)  
+	
+<br>
+
+#### 10:00 - 10:20 | Break	
+
+
+<br>
+
+#### 10:20 -12:00	| Improvements
+
+* Improving data accuracy and completeness vs. improving forecasting tools: estimating the value of information (Jim Peterson)
+
+* Identifying data and information gaps (lead?)
+
+* Data quality considerations
+
+<br>
+
+#### 12:00 - 1:00	| Lunch (box lunches provided)
+
+
+<br>
+
+#### 1:00 - 3:00 | Introduction to R packages
+
+* Forecasting and/or assessing forecast accuracy (Ethan Clemons)
+
+* Hands on analyses; participants bring their own dataset
+
+
+<br>
+
+#### 3:00 - 3:15 | Break
+
+
+<br>
+
+#### 3:15 - 4:30 | After the forecast
+
+* Managing under uncertainty (Matt Falcy)
+
+*	Forecast evaluation and uncertainty communication (Yi Xu)
+
+*	Run reconstruction processes (Michael O’Farrell)
+
+
+***
+
+## Friday,  Sept 13
+
+<br>
+
+#### 8:30 - 10:00 | Assess forecast accuracy and adequacy
+
+* Should we adopt common standards?
+	
+*	Tools and metrics
+	
+* Thinking big on new and emerging technologies
+	
+* Suggestion: What role can and will AI (eg, [Claude.ai](https://claude.ai/login?returnTo=%2F%3F)) have in the development and the deployment of forecasting salmon stocks now and into the future? (Matt Falcy), 
+	
+* Can you manage while recognizing uncertainty in run recon/returns?
+
+*	How to account for uncertainty due to non-stationarity and novel/ unobserved environmental conditions?
+
+
+<br>
+
+#### 10:00 - 10:15 | Break
+
+
+<br>
+
+#### 10:15 - 11:30 | Moving into the future
+	
+<br>
+
+#### 11:30 | Adjourn
