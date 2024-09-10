@@ -1,9 +1,7 @@
 ---
-title: "Introduction to Forecasting"
-subtitle: "Predicting Salmon Returns"  
-author: 
-#  - "Mark Scheuerell"
-  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
+title: "Overview of Forecasting Strategy"
+subtitle: "Topics for discussion"
+author: "Mark Scheuerell<br><br><br>(use the arrows keys to navigate the slide deck)"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "my-theme.css"]
