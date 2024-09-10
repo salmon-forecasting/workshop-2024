@@ -1,9 +1,6 @@
 ---
 title: "Fitting State-Space Models"
-subtitle: "Predicting Salmon Returns"  
-author: 
-#  - "Mark Scheuerell"
-  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
+author: "Mark Scheuerell"
 output:
   html_document:
     theme: cerulean
