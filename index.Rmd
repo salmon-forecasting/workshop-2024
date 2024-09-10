@@ -9,9 +9,9 @@ output: html_document
 
 <br>
 
-### Oregon State University
-
 ### [North Willamette Research and Extension Center](https://extension.oregonstate.edu/nwrec)
+
+### Oregon State University
 
 <style>
 h1 {
