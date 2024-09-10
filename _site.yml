@@ -1,0 +1,17 @@
+name: "docs"
+navbar:
+  title: "Salmon Forecasting"
+  right:
+    - text: "Background"
+      href: background.html
+    - text: "Schedule"
+      href: schedule.html
+    - text: "Materials"
+      href: materials.html
+    - text: "Participants"
+      href: participants.html
+output_dir: "docs"
+output:
+  html_document:
+    theme: cerulean
+    highlight: textmate
