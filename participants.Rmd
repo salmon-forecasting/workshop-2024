@@ -1,0 +1,79 @@
+---
+title: "Participants"
+output: html_document
+---
+
+***
+
+## California
+
+[**Dr. Nicholas Som**](https://www1.usgs.gov/coopunits/staff/1016137)   
+Unit Leader | California Cooperative Fish and Wildlife Research Unit  
+Adjunct Professor | Department of Fisheries Biology  
+California Polytechnic University  
+
+[**Dr. Colby Hause**](https://wildlife.ca.gov/)   
+Scientist | California Department of Fish & Wildlife
+
+[**Dr. Brett Kormos**](https://wildlife.ca.gov/)   
+Scientist | California Department of Fish & Wildlife
+
+[**Dr. Kandice Morgenstern**](https://wildlife.ca.gov/)   
+Scientist | California Department of Fish & Wildlife
+
+[**Dr. Colin Purdy**](https://wildlife.ca.gov/)   
+Scientist | California Department of Fish & Wildlife
+
+[**Dr. Dylan Stompe**](https://wildlife.ca.gov/)   
+Scientist | California Department of Fish & Wildlife
+
+
+***
+
+## Oregon
+
+[**Dr. Jim Peterson**](https://www.petersonlabosu.org/)   
+Unit Leader | Oregon Cooperative Fish and Wildlife Research Unit  
+Assistant Professor | Department of Fisheries, Wildlife, and Conservation Sciences
+Oregon State University  
+
+[**Dr. Megan Sabal**](https://odfwredd.forestry.oregonstate.edu/people/megan-sabal)   
+Scientist | Oregon Department of Fish & Wildlife
+
+[**Dr. Ethan Clemons**](https://www.dfw.state.or.us/)   
+Scientist | Oregon Department of Fish & Wildlife
+
+
+***
+
+## Washington
+
+[**Dr. Mark Scheuerell**](https://fish.uw.edu/faculty/mark-scheuerell/)   
+Assistant Unit Leader | Washington Cooperative Fish and Wildlife Research Unit  
+Associate Professor | School of Aquatic and Fishery Sciences  
+University of Washington  
+
+[**Dr. Mathew Bogaard**](https://wdfw.wa.gov/)   
+Scientist | Washington Department of Fish & Wildlife
+
+[**Dr. Jan Ohlberger**](https://wdfw.wa.gov/)   
+Scientist | Washington Department of Fish & Wildlife
+
+[**Dr. Mark Sorel**](https://wdfw.wa.gov/)   
+Scientist | Washington Department of Fish & Wildlife
+
+[**Dr. Yi Xu**](https://wdfw.wa.gov/)   
+Scientist | Washington Department of Fish & Wildlife
+
+***
+
+## Idaho
+
+[**Dr. Matt Falcy**](https://www.uidaho.edu/cnr/faculty/falcy)   
+Assistant Unit Leader | Idaho Cooperative Fish and Wildlife Research Unit  
+Assistant Professor | Department of Fish and Wildlife Sciences  
+University of Idaho  
+
+[**Dr. Chris Sullivan**](https://wdfw.wa.gov/)   
+Scientist | Idaho Department of Fish & Game
+
