@@ -110,7 +110,7 @@ output:
 
 * Managing under uncertainty (Matt Falcy)
 
-*	Forecast evaluation and uncertainty communication (Yi Xu)
+*	[Forecast evaluation and uncertainty communication](materials/Forecast_Workshop_Xu_2024.pdf) (Yi Xu)
 
 *	Run reconstruction processes (Michael O’Farrell)
 
