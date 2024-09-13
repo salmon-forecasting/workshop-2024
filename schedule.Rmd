@@ -21,21 +21,21 @@ output:
 
 #### 1:15 - 2:45 | Round table presentation and discussions
 
-* Overview of ODFW forecasting (Megan Sabal)
+* Overview of ODFW forecasting | Megan Sabal
 	  
-* Columbia River US vs. Oregon (Mark Sorel and Hanna Moore)
+* Columbia River US vs. Oregon | Mark Sorel & Hanna Moore
 	  
-* Columbia Idaho perspectives - real time / in season management (Chris Sullivan)
+* Columbia Idaho perspectives - real time / in season management | Chris Sullivan
 	  
-* Run forecasts for WA coastal steelhead using integrated population models (Jan Ohlberger)
+* Run forecasts for WA coastal steelhead using integrated population models | Jan Ohlberger
 	  
-* Klamath salmon forecasts (Brett Kormos)
+* Klamath salmon forecasts | Brett Kormos
 	  
-* Central Valley salmon forecasts (Colin Purdy)
+* Central Valley salmon forecasts | Colin Purdy
 	  
-* How forecasts are used in ocean fishery models (Ethan Clemons/ Michael O’Farrell)
+* How forecasts are used in ocean fishery models | Ethan Clemons & Michael O’Farrell)
 	  
-* Salmon and Elk river basins forecasts (Brian Riggers)
+* Salmon and Elk river basins forecasts | Brian Riggers
 
 
 <br>
@@ -64,11 +64,11 @@ output:
 
 #### 8:30 - 10:00 | Forecasting tech: tools and approaches
 
-* Summary and synthesis of differing forecasting math (Mark Scheuerell) 
+* Summary and synthesis of differing forecasting math | Mark Scheuerell
     
-    -	Introduce approaches not discussed during round table (see [`Forecasting tools and approaches.xlsx`](materials/forecasting_tools_approaches.xlsx))
+* Introduce approaches not discussed during round table (see [`Forecasting tools and approaches.xlsx`](materials/forecasting_tools_approaches.xlsx))
     
-    - Assessing predictive ability (Nick Som)  
+* Assessing predictive ability | Nick Som
 	
 <br>
 
@@ -79,9 +79,9 @@ output:
 
 #### 10:20 -12:00	| Improvements
 
-* Improving data accuracy and completeness vs. improving forecasting tools: estimating the value of information (Jim Peterson)
+* Improving data accuracy and completeness vs. improving forecasting tools: estimating the value of information | Jim Peterson
 
-* Identifying data and information gaps (lead?)
+* Identifying data and information gaps
 
 * Data quality considerations
 
@@ -94,7 +94,7 @@ output:
 
 #### 1:00 - 3:00 | Introduction to R packages
 
-* Forecasting and/or assessing forecast accuracy (Ethan Clemons)
+* Forecasting and/or assessing forecast accuracy | Ethan Clemons
 
 * Hands on analyses; participants bring their own dataset
 
@@ -108,11 +108,11 @@ output:
 
 #### 3:15 - 4:30 | After the forecast
 
-* Managing under uncertainty (Matt Falcy)
+* [Managing under uncertainty](materials/Falcy_USGS_SalmonForecasting_Uncertainty_Decisions.pdf) | Matt Falcy
 
-*	[Forecast evaluation and uncertainty communication](materials/Forecast_Workshop_Xu_2024.pdf) (Yi Xu)
+*	[Forecast evaluation and uncertainty communication](materials/Forecast_Workshop_Xu_2024.pdf) | Yi Xu
 
-*	Run reconstruction processes (Michael O’Farrell)
+*	Run reconstruction processes | Michael O’Farrell
 
 
 ***
@@ -129,7 +129,7 @@ output:
 	
 * Thinking big on new and emerging technologies
 	
-* Suggestion: What role can and will AI (eg, [Claude.ai](https://claude.ai/login?returnTo=%2F%3F)) have in the development and the deployment of forecasting salmon stocks now and into the future? (Matt Falcy), 
+* Suggestion: What role can and will AI (eg, [Claude.ai](https://claude.ai/login?returnTo=%2F%3F)) have in the development and the deployment of forecasting salmon stocks now and into the future? | Matt Falcy
 	
 * Can you manage while recognizing uncertainty in run recon/returns?
 

@@ -29,3 +29,4 @@ This page contains some background materials, presentations, and other informati
 
 * [Fitting state-space models to data](materials/fitting_ssm.html) | Mark Scheuerell
 
+* [Netica example of managing under risk](materials/Harvest.neta) | Matt Falcy
