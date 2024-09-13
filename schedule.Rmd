@@ -21,11 +21,11 @@ output:
 
 #### 1:15 - 2:45 | Round table presentation and discussions
 
-* Overview of ODFW forecasting | Megan Sabal
+* [Overview of ODFW forecasting](materials/Sabal_Oregon_salmon_forecasts.pdf) | Megan Sabal
 	  
 * Columbia River US vs. Oregon | Mark Sorel & Hanna Moore
 	  
-* Columbia Idaho perspectives - real time / in season management | Chris Sullivan
+* [Columbia Idaho perspectives - real time / in season management](Sullivan_Forecast_Workshop_2024.pdf) | Chris Sullivan
 	  
 * Run forecasts for WA coastal steelhead using integrated population models | Jan Ohlberger
 	  
@@ -68,7 +68,7 @@ output:
     
 * Introduce approaches not discussed during round table (see [`Forecasting tools and approaches.xlsx`](materials/forecasting_tools_approaches.xlsx))
     
-* Assessing predictive ability | Nick Som
+* [Assessing predictive ability](materials/Som_SFW_predictive_accuracy.pdf) | Nick Som
 	
 <br>
 
