@@ -64,7 +64,7 @@ output:
 
 #### 8:30 - 10:00 | Forecasting tech: tools and approaches
 
-* Summary and synthesis of differing forecasting math | Mark Scheuerell
+* [Summary and synthesis of differing forecasting math](materials/forecasting_approaches.pdf) | Mark Scheuerell
     
 * Introduce approaches not discussed during round table (see [`Forecasting tools and approaches.xlsx`](materials/forecasting_tools_approaches.xlsx))
     
