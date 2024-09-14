@@ -33,7 +33,7 @@ output:
 	  
 * Central Valley salmon forecasts | Colin Purdy
 	  
-* How forecasts are used in ocean fishery models | Ethan Clemons & Michael O’Farrell)
+* [How forecasts are used in ocean fishery models](materials/Clemons_Forecast_Ocean_Harvest.pdf) | Ethan Clemons & Michael O’Farrell)
 	  
 * Salmon and Elk river basins forecasts | Brian Riggers
 
@@ -94,7 +94,7 @@ output:
 
 #### 1:00 - 3:00 | Introduction to R packages
 
-* Forecasting and/or assessing forecast accuracy | Ethan Clemons
+* [Forecasting and/or assessing forecast accuracy](materials/Clemons_ForecastR_primer.pdf) | Ethan Clemons
 
 * Hands on analyses; participants bring their own dataset
 
