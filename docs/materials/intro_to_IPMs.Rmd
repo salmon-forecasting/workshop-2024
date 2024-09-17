@@ -50,7 +50,7 @@ style_duo(
     gray = "#808080",
     lightgray = "#bdbdbd"
 ),
-  header_font_google = google_font("Roboto Condensed", "400", "400i", "700"),
+  header_font_google = google_font("Roboto Condensed"),
   text_font_google = google_font("Cabin", "400", "400i", "700"),
 )
 ```
