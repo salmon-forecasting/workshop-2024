@@ -23,7 +23,7 @@ output:
 
 * [Overview of ODFW forecasting](materials/Sabal_Oregon_salmon_forecasts.pdf) | Megan Sabal
 	  
-* Columbia River US vs. Oregon | Mark Sorel & Hanna Moore
+* [Columbia River US vs. Oregon](materials/Columbia_River_Moore-Sorel.pdf) | Mark Sorel & Hanna Moore
 	  
 * [Columbia Idaho perspectives - real time / in season management](Sullivan_Forecast_Workshop_2024.pdf) | Chris Sullivan
 	  
